@@ -1,0 +1,81 @@
+﻿#region LIBS
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+#endregion
+
+namespace _808
+{
+    public partial class MainForm : Form
+    {
+        //Contructor
+        public MainForm()
+        {
+            InitializeComponent();
+        }
+
+        #region NONE BUSINESS LOGIC 
+        /*
+            This section contains custom styles and basic functionality form sets    
+        */
+        private bool flagMinMax { get; set; }
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+        private void BtnClose_MouseEnter(object sender, EventArgs e) => btnClose.BackColor = Color.FromArgb(218, 51, 51);
+        private void BtnClose_MouseLeave(object sender, EventArgs e) => btnClose.BackColor = Color.Transparent;
+        private void BtnMax_MouseEnter(object sender, EventArgs e) => btnMax.BackColor = Color.FromArgb(222, 219, 219);
+        private void BtnMax_MouseLeave(object sender, EventArgs e) => btnMax.BackColor = Color.Transparent;
+        private void BtnMin_MouseEnter(object sender, EventArgs e) => btnMin.BackColor = Color.FromArgb(222, 219, 219);
+        private void BtnMin_MouseLeave(object sender, EventArgs e) => btnMin.BackColor = Color.Transparent;
+        private void BtnMin_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
+        private void BtnClose_Click(object sender, EventArgs e) => Dispose();
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (WindowState == FormWindowState.Maximized)
+                {
+                    flagMinMax = false;
+                }
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+        private void BtnMax_Click(object sender, EventArgs e)
+        {
+            if (!flagMinMax)
+            {
+                WindowState = FormWindowState.Maximized;
+                flagMinMax = true;
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+                flagMinMax = false;
+            }
+        }
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+                panelDownTitle.Show();
+        }
+
+
+
+        #endregion
+
+     
+    }
+}
