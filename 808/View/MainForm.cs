@@ -1,4 +1,8 @@
 ﻿#region LIBS
+using _808.Model;
+using _808.View;
+using _808.ViewModel;
+using Guna.UI.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +13,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq.Dynamic;
+using System.Threading;
 #endregion
 
 namespace _808
@@ -21,11 +27,12 @@ namespace _808
             InitializeComponent();
         }
 
-        #region NONE BUSINESS LOGIC 
+        #region FORM STYLES 
         /*
             This section contains custom styles and basic functionality form sets    
         */
         private bool flagMinMax { get; set; }
+        bool sortAscending = false;
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
@@ -58,24 +65,82 @@ namespace _808
             if (!flagMinMax)
             {
                 WindowState = FormWindowState.Maximized;
+                loader.Location = new Point(650, 250);
                 flagMinMax = true;
             }
             else
             {
                 WindowState = FormWindowState.Normal;
+                loader.Location = new Point(372, 104);
                 flagMinMax = false;
             }
         }
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Normal)
-                panelDownTitle.Show();
+            loader.Location = new Point(372, 104);
         }
 
-
-
         #endregion
+        private void BtnVistaPrevia_Click(object sender, EventArgs e)
+        {
 
-     
+            List<Article> lstArt = dgvCodes.DataSource as List<Article>;
+            if (lstArt != null && lstArt.Count > 0)
+            {
+                ViewerForm vform = new ViewerForm(lstArt);
+                vform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("No hay información en el visor.", "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+        private async void MainForm_Load(object sender, EventArgs e)
+        {
+            comboFamily.DataSource = await Main.GetFamilies();
+            comboFamily.SelectedIndex = -1;
+        }
+        private async void ComboFamily_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            comboLine.DataSource = await Main.GetLinesBasedOnFam(comboFamily.Text);
+            comboLine.SelectedIndex = -1;
+        }
+        private async void ComboLine_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            txtDescCode.Text = "";
+            dgvCodes.Hide();
+            dgvCodes.DataSource = await Main.GetByFamAndLine(comboLine.Text, comboFamily.Text, loader);
+            Main.SetDataGridView(dgvCodes);
+            dgvCodes.Show();
+        }
+        private void DgvCodes_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            List<Article> lstArt = dgvCodes.DataSource as List<Article>;
+            if (sortAscending)
+                dgvCodes.DataSource = lstArt.OrderBy(dgvCodes.Columns[e.ColumnIndex].DataPropertyName).ToList();
+            else
+                dgvCodes.DataSource = lstArt.OrderBy(dgvCodes.Columns[e.ColumnIndex].DataPropertyName).Reverse().ToList();
+            sortAscending = !sortAscending;
+        }
+        private async void BtnBuscar_Click(object sender, EventArgs e)
+        {
+            if (txtDescCode.Text != "" && txtDescCode.Text.Length <= 25)
+            {
+                comboFamily.SelectedIndex = -1;
+                comboLine.SelectedIndex = -1;
+                dgvCodes.Hide();
+                dgvCodes.DataSource = await Main.GetByCode(txtDescCode.Text, loader);
+                Main.SetDataGridView(dgvCodes);
+                dgvCodes.Show();
+            }
+            else
+            {
+                MessageBox.Show("El campo \"Código\" no puede estar vacío ni debe tener una longitud mayor a 25 caracteres.", "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
     }
+
 }
