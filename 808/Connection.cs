@@ -31,7 +31,7 @@ namespace _808.Services
         internal static SqlConnection GetConnectionIntelisis()
         {
 
-            SqlConnection con = global::Conexion.ObjetoConexion.getconexion("MAVICUBOS", INTELISISTMP);
+            SqlConnection con = global::Conexion.ObjetoConexion.getconexion("ERPMAVI", INTELISISTMP);
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(con.ConnectionString)
             {
                 ApplicationName = Assembly.GetCallingAssembly().GetName().Name

@@ -9,9 +9,10 @@ namespace _808.Model
     public class Article
     {
         public bool Checked { get; set; }
-        public string Code { get; set; }
-        public string Name  { get; set; }
-        public string Family { get; set; }
-        public string Line { get; set; }
+        public string Artículo { get; set; }
+        public string Descripcion1 { get; set; }
+        public string Familia { get; set; }
+        public string Linea { get; set; }
+        public string Cuenta { get; set; }
     }
 }

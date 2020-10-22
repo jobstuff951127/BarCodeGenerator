@@ -52,9 +52,9 @@
             this.gunaLabel1 = new Guna.UI.WinForms.GunaLabel();
             this.comboLine = new Guna.UI.WinForms.GunaComboBox();
             this.labelLine = new Guna.UI.WinForms.GunaLabel();
-            this.txtDescCode = new Guna.UI.WinForms.GunaTextBox();
             this.labelFamily = new Guna.UI.WinForms.GunaLabel();
             this.shadowPanel = new Guna.UI.WinForms.GunaShadowPanel();
+            this.txtDescCode = new Guna.UI.WinForms.GunaTextBox();
             this.panelUpToDgv = new System.Windows.Forms.Panel();
             this.loader = new Guna.UI.WinForms.GunaWinCircleProgressIndicator();
             this.dgvCodes = new Guna.UI.WinForms.GunaDataGridView();
@@ -381,27 +381,6 @@
             this.labelLine.Text = "LINEA:";
             this.labelLine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             // 
-            // txtDescCode
-            // 
-            this.txtDescCode.BackColor = System.Drawing.Color.Transparent;
-            this.txtDescCode.BaseColor = System.Drawing.Color.White;
-            this.txtDescCode.BorderColor = System.Drawing.Color.Silver;
-            this.txtDescCode.BorderSize = 1;
-            this.txtDescCode.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtDescCode.FocusedBaseColor = System.Drawing.Color.White;
-            this.txtDescCode.FocusedBorderColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtDescCode.FocusedForeColor = System.Drawing.SystemColors.ControlText;
-            this.txtDescCode.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtDescCode.Location = new System.Drawing.Point(32, 42);
-            this.txtDescCode.MultiLine = true;
-            this.txtDescCode.Name = "txtDescCode";
-            this.txtDescCode.PasswordChar = '\0';
-            this.txtDescCode.Radius = 10;
-            this.txtDescCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtDescCode.Size = new System.Drawing.Size(177, 28);
-            this.txtDescCode.TabIndex = 28;
-            this.txtDescCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // labelFamily
             // 
             this.labelFamily.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -421,13 +400,13 @@
             // 
             this.shadowPanel.BackColor = System.Drawing.Color.Transparent;
             this.shadowPanel.BaseColor = System.Drawing.Color.White;
+            this.shadowPanel.Controls.Add(this.txtDescCode);
             this.shadowPanel.Controls.Add(this.comboFamily);
             this.shadowPanel.Controls.Add(this.btnVistaPrevia);
             this.shadowPanel.Controls.Add(this.btnBuscar);
             this.shadowPanel.Controls.Add(this.gunaLabel1);
             this.shadowPanel.Controls.Add(this.labelFamily);
             this.shadowPanel.Controls.Add(this.comboLine);
-            this.shadowPanel.Controls.Add(this.txtDescCode);
             this.shadowPanel.Controls.Add(this.labelLine);
             this.shadowPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.shadowPanel.Location = new System.Drawing.Point(0, 99);
@@ -436,6 +415,25 @@
             this.shadowPanel.Size = new System.Drawing.Size(800, 96);
             this.shadowPanel.TabIndex = 31;
             this.shadowPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
+            // 
+            // txtDescCode
+            // 
+            this.txtDescCode.BackColor = System.Drawing.Color.Transparent;
+            this.txtDescCode.BaseColor = System.Drawing.Color.White;
+            this.txtDescCode.BorderColor = System.Drawing.Color.Silver;
+            this.txtDescCode.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtDescCode.FocusedBaseColor = System.Drawing.Color.White;
+            this.txtDescCode.FocusedBorderColor = System.Drawing.Color.DeepSkyBlue;
+            this.txtDescCode.FocusedForeColor = System.Drawing.SystemColors.ControlText;
+            this.txtDescCode.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtDescCode.Location = new System.Drawing.Point(42, 45);
+            this.txtDescCode.Name = "txtDescCode";
+            this.txtDescCode.PasswordChar = '\0';
+            this.txtDescCode.Radius = 10;
+            this.txtDescCode.Size = new System.Drawing.Size(166, 26);
+            this.txtDescCode.TabIndex = 30;
+            this.txtDescCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtDescCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtDescCode_KeyDown);
             // 
             // panelUpToDgv
             // 
@@ -585,7 +583,6 @@
         private Guna.UI.WinForms.GunaComboBox comboLine;
         private Guna.UI.WinForms.GunaLabel labelLine;
         private Guna.UI.WinForms.GunaCircleButton btnVistaPrevia;
-        private Guna.UI.WinForms.GunaTextBox txtDescCode;
         private Guna.UI.WinForms.GunaLabel labelFamily;
         private Guna.UI.WinForms.GunaCircleButton btnBuscar;
         private Guna.UI.WinForms.GunaShadowPanel shadowPanel;
@@ -598,6 +595,7 @@
         private Guna.UI.WinForms.GunaDataGridView dgvCodes;
         private Guna.UI.WinForms.GunaImageButton btnMin;
         private Guna.UI.WinForms.GunaWinCircleProgressIndicator loader;
+        private Guna.UI.WinForms.GunaTextBox txtDescCode;
     }
 }
 

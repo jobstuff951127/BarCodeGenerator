@@ -81,9 +81,10 @@ namespace _808
         }
 
         #endregion
+
+        //Este metodo pasa por parametros la info del datagridview en una lista la contructor del nuevo form
         private void BtnVistaPrevia_Click(object sender, EventArgs e)
         {
-
             List<Article> lstArt = dgvCodes.DataSource as List<Article>;
             if (lstArt != null && lstArt.Count > 0)
             {
@@ -114,14 +115,20 @@ namespace _808
             Main.SetDataGridView(dgvCodes);
             dgvCodes.Show();
         }
+
+        //Este metodo sirve para ordenar el datagridview al dar click en cualquier header que no sea el 1ero.
+        //Usa linq Dynamico, actualizar codigo a la version mas reciente
         private void DgvCodes_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             List<Article> lstArt = dgvCodes.DataSource as List<Article>;
-            if (sortAscending)
-                dgvCodes.DataSource = lstArt.OrderBy(dgvCodes.Columns[e.ColumnIndex].DataPropertyName).ToList();
-            else
-                dgvCodes.DataSource = lstArt.OrderBy(dgvCodes.Columns[e.ColumnIndex].DataPropertyName).Reverse().ToList();
-            sortAscending = !sortAscending;
+            if (e.ColumnIndex != 0)
+            {
+                if (sortAscending)
+                    dgvCodes.DataSource = lstArt.OrderBy(dgvCodes.Columns[e.ColumnIndex].DataPropertyName).ToList();
+                else
+                    dgvCodes.DataSource = lstArt.OrderBy(dgvCodes.Columns[e.ColumnIndex].DataPropertyName).Reverse().ToList();
+                sortAscending = !sortAscending;
+            }
         }
         private async void BtnBuscar_Click(object sender, EventArgs e)
         {
@@ -141,6 +148,11 @@ namespace _808
 
         }
 
+        private void TxtDescCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnBuscar.PerformClick();
+        }
     }
 
 }

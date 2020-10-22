@@ -22,9 +22,9 @@ namespace _808.ViewModel
                 {
                     using (IDbConnection db = Connection.GetConnectionIntelisis())
                     {
-                        return db.Query<string>("SpVTASBarCodeGenerator",
-                            new { option = "GetFamilies" },
-                            commandType: CommandType.StoredProcedure).ToList();
+                        return db.Query<string>("SpVTASGeneradorCodigoBarras",
+                            new { opcion = "GetFamilies" },
+                            commandType: CommandType.StoredProcedure).OrderBy(f => f).ToList();
                     }
                 });
 
@@ -46,9 +46,9 @@ namespace _808.ViewModel
                 {
                     using (IDbConnection db = Connection.GetConnectionIntelisis())
                     {
-                        return db.Query<string>("SpVTASBarCodeGenerator",
-                            new { option = "GetLines", family = familyFromClient },
-                            commandType: CommandType.StoredProcedure).ToList();
+                        return db.Query<string>("SpVTASGeneradorCodigoBarras",
+                            new { opcion = "GetLines", familia = familyFromClient },
+                            commandType: CommandType.StoredProcedure).OrderBy(l => l).ToList();
                     }
                 });
 
@@ -74,8 +74,8 @@ namespace _808.ViewModel
                     }));
                     using (IDbConnection db = Connection.GetConnectionIntelisis())
                     {
-                        return db.Query<Article>("SpVTASBarCodeGenerator",
-                            new { option = "GetByFamAndLine", family = familyFromClient, line = lineFromClient },
+                        return db.Query<Article>("SpVTASGeneradorCodigoBarras",
+                            new { opcion = "GetByFamAndLine", familia = familyFromClient, linea = lineFromClient },
                             commandType: CommandType.StoredProcedure).ToList();
                     }
                 });
@@ -89,6 +89,7 @@ namespace _808.ViewModel
             }
             catch (Exception ex)
             {
+                loader.Hide();
                 MessageBox.Show(ex.ToString(), "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
@@ -108,8 +109,8 @@ namespace _808.ViewModel
                     }));
                     using (IDbConnection db = Connection.GetConnectionIntelisis())
                     {
-                        return db.Query<Article>("SpVTASBarCodeGenerator",
-                            new { option = "GetByCode", code = codeFromClient},
+                        return db.Query<Article>("SpVTASGeneradorCodigoBarras",
+                            new { opcion = "GetByCode", articulo = codeFromClient},
                             commandType: CommandType.StoredProcedure).ToList();
                     }
                 });
@@ -123,6 +124,7 @@ namespace _808.ViewModel
             }
             catch (Exception ex)
             {
+                loader.Hide();
                 MessageBox.Show(ex.ToString(), "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
@@ -131,16 +133,17 @@ namespace _808.ViewModel
 
         public static void SetDataGridView(GunaDataGridView dgv)
         {
-            dgv.Columns["Code"].ReadOnly = true;
-            dgv.Columns["Name"].ReadOnly = true;
-            dgv.Columns["Family"].ReadOnly = true;
-            dgv.Columns["Line"].ReadOnly = true;
+            dgv.Columns["Artículo"].ReadOnly = true;
+            dgv.Columns["Descripcion1"].ReadOnly = true;
+            dgv.Columns["Familia"].ReadOnly = true;
+            dgv.Columns["Linea"].ReadOnly = true;
 
-            dgv.Columns["Code"].HeaderText = "Artículo";
-            dgv.Columns["Name"].HeaderText = "Descripción";
-            dgv.Columns["Family"].HeaderText = "Familia";
-            dgv.Columns["Line"].HeaderText = "Línea";
+            dgv.Columns["Descripcion1"].HeaderText = "Descripción";
+            dgv.Columns["Linea"].HeaderText = "Línea";
             dgv.Columns["Checked"].HeaderText = "";
+            
+            dgv.Columns["Checked"].Width = 35;
+            dgv.Columns["Cuenta"].Visible = false;
         }
     }
 }

@@ -22,8 +22,6 @@ namespace _808.View
 {
     public partial class ViewerForm : Form
     {
-
-        //Contructor
         public ViewerForm(List<Article> lstArt)
         {
             InitializeComponent();

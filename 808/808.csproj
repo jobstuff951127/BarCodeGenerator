@@ -138,17 +138,21 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\close.png" />
-    <Content Include="Resources\lupa.png" />
-    <Content Include="Resources\max.png" />
-    <Content Include="Resources\min.png" />
-    <Content Include="Resources\vistaPrevia.png" />
+    <Content Include="Resources\DLL\pdfium.dll" />
+    <Content Include="Resources\DLL\Conexion.dll" />
+    <Content Include="Resources\DLL\Guna.UI.dll" />
+    <Content Include="Resources\Imagenes\close.png" />
+    <Content Include="Resources\Imagenes\lupa.png" />
+    <Content Include="Resources\Imagenes\max.png" />
+    <Content Include="Resources\Imagenes\min.png" />
+    <Content Include="Resources\Imagenes\vistaPrevia.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
